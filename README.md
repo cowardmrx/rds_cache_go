@@ -25,6 +25,9 @@ err := caches.Put("key2",amapJson,1 * time.Minute)
 // Exist 
 exist := caches.Exist("key2")
 
+// Get
+result := caches.Get("key2")
+
 // Delete
 result,err := caches.Delete("key2")
 
