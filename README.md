@@ -1,9 +1,9 @@
 #rds_cache_go
 
-##说明
+## 说明
 rds_cache_go是基于go-redis的缓存工具包
 
-##安装
+## 安装
 go get -u github.com/cowardmrx/rds_cache_go
 
 ## 使用
