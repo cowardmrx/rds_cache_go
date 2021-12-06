@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-var caches = NewCache(WithHost("192.168.0.151"), WithPort("6379"), WithDbname(13))
+var caches = NewCache(WithHost("192.168.0.151"), WithPort("6379"), WithDB(13))
 
 func TestCache(t *testing.T) {
 

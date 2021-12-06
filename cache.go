@@ -34,7 +34,7 @@ func WithPassword(password string) Option {
 	}
 }
 
-func WithDbname(db int) Option {
+func WithDB(db int) Option {
 	return func(ca *config) {
 		ca.DB = db
 	}
