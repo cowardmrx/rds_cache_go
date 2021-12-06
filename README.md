@@ -8,7 +8,7 @@ go get -u github.com/cowardmrx/rds_cache_go
 
 ## 使用
 ```go
-var caches = NewCache(WithHost("192.168.0.151"), WithPort("6379"), WithDbname(13))
+var caches = NewCache(WithHost("192.168.0.151"), WithPort("6379"), WithDB(13))
 
 // PUT 
 err := caches.Put("key1", "va", 1*time.Minute)
