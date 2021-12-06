@@ -15,5 +15,5 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# 屏蔽指定文件夹
+# 屏蔽文件夹
 .idea
