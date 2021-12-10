@@ -12,6 +12,7 @@ type config struct {
 	Port     string
 	Password string
 	DB       int
+	Client   *redis.Client
 }
 
 type Option func(ca *config)
@@ -31,6 +32,12 @@ func WithPort(port string) Option {
 func WithPassword(password string) Option {
 	return func(ca *config) {
 		ca.Password = password
+	}
+}
+
+func WithRedisClient(client *redis.Client) Option {
+	return func(ca *config) {
+		ca.Client = client
 	}
 }
 
@@ -65,11 +72,16 @@ func NewCache(opts ...Option) Cache {
 
 	rClient := new(cache)
 
-	rClient.client = redis.NewClient(&redis.Options{
-		Addr:     fmt.Sprintf("%s:%s", cha.Host, cha.Port),
-		Password: cha.Password,
-		DB:       cha.DB,
-	})
+	if cha.Client == nil {
+
+		rClient.client = redis.NewClient(&redis.Options{
+			Addr:     fmt.Sprintf("%s:%s", cha.Host, cha.Port),
+			Password: cha.Password,
+			DB:       cha.DB,
+		})
+	} else {
+		rClient.client = cha.Client
+	}
 
 	rClient.ctx = context.Background()
 
