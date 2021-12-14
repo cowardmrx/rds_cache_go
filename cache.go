@@ -8,11 +8,12 @@ import (
 )
 
 type config struct {
-	Host     string
-	Port     string
-	Password string
-	DB       int
-	Client   *redis.Client
+	Host     string        // redis主机
+	Port     string        // redis 端口
+	Password string        // redis 密码
+	DB       int           // redis库名
+	Client   *redis.Client // redis链接客户端 【如果项目中已经有了redis链接可使用该参数】
+	OriginDB bool          // 是否强制使用redis客户端【Client】的DB
 }
 
 type Option func(ca *config)
@@ -44,6 +45,12 @@ func WithRedisClient(client *redis.Client) Option {
 func WithDB(db int) Option {
 	return func(ca *config) {
 		ca.DB = db
+	}
+}
+
+func WithOriginDB(originDB bool) Option {
+	return func(ca *config) {
+		ca.OriginDB = originDB
 	}
 }
 
@@ -81,6 +88,9 @@ func NewCache(opts ...Option) Cache {
 		})
 	} else {
 		rClient.client = cha.Client
+		if cha.OriginDB == false {
+			rClient.client.Options().DB = cha.DB
+		}
 	}
 
 	rClient.ctx = context.Background()

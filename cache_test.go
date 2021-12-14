@@ -2,6 +2,7 @@ package rds_cache_go
 
 import (
 	"fmt"
+	"github.com/go-redis/redis/v8"
 	"testing"
 	"time"
 )
@@ -35,4 +36,16 @@ func TestCache_Delete(t *testing.T) {
 
 	resunt := caches.Delete("key1", "key2")
 	fmt.Println(resunt)
+}
+
+func TestCache_RdsClient(t *testing.T) {
+	client := redis.NewClient(&redis.Options{
+		Addr:     fmt.Sprintf("%s:%s", "192.168.0.151", "6379"),
+		Password: "",
+		DB:       15,
+	})
+
+	cachess := NewCache(WithRedisClient(client), WithOriginDB(true), WithDB(11))
+
+	cachess.Put("this key", "this aaaaa", 1*time.Minute)
 }
