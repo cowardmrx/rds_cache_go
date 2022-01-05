@@ -49,3 +49,79 @@ func TestCache_RdsClient(t *testing.T) {
 
 	cachess.Put("this key", "this aaaaa", 1*time.Minute)
 }
+
+func TestCache_HPut(t *testing.T) {
+
+	//value1 := map[string]interface{}{
+	//	"data": "shabi",
+	//}
+	//
+	//jsonValue, _ := json.Marshal(value1)
+
+	if err := caches.HPut("h_key", "hvalue_1", 1, "key_2", 3.14); err != nil {
+		t.Logf("hash put failed: %v", err)
+		return
+	}
+
+	t.Log("hash put success")
+}
+
+func TestCache_HMPut(t *testing.T) {
+
+	if err := caches.HMPut("h_m_put", "hm_key_1", "hm_value_1", "hm_key_2", "hm_value_2"); err != nil {
+		t.Logf("hm put failed: %v", err.Error())
+		return
+	}
+
+	t.Log("hm put success")
+}
+
+func TestCache_HKeyExist(t *testing.T) {
+	if ok := caches.HKeyExist("h_m_put", "hm_key_1"); !ok {
+		t.Log("key is not exist")
+		return
+	}
+
+	t.Log("key is exist")
+}
+
+func TestCache_HGet(t *testing.T) {
+	result := caches.HGet("h_key", "hvalue_1")
+
+	t.Logf("result is :%v", result)
+}
+
+func TestCache_HGetAll(t *testing.T) {
+	result := caches.HGetAll("h_keys")
+
+	t.Logf("result is : %v", result)
+}
+
+func TestCache_HGetKeyAll(t *testing.T) {
+	result := caches.HGetKeyAll("h_key")
+	t.Logf("all key is : %v", result)
+}
+
+func TestCache_HIncrBy(t *testing.T) {
+	result := caches.HIncrBy("h_key", "hvalue_1", 3)
+
+	t.Logf("result is : %v", result)
+}
+
+func TestCache_HFloatIncrBy(t *testing.T) {
+	result := caches.HFloatIncrBy("h_key", "key_2", 3.14)
+
+	t.Logf("result is : %v", result)
+}
+
+func TestCache_HGetValAll(t *testing.T) {
+	result := caches.HGetValAll("h_key")
+
+	t.Logf("result is : %v", result)
+}
+
+func TestCache_HDelete(t *testing.T) {
+	result := caches.HDelete("h_key", "key_2")
+
+	t.Logf("result is : %v", result)
+}
